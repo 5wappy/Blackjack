@@ -1,14 +1,67 @@
 import random
 money = 1000
+dmoney = 1000
 suites = ["Hearts", "Diamonds", "Spades", "Clubs"]
 cards = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"]
 deck = [(card, suite) for suite in suites for card in cards]
 random.shuffle(deck)
+card_values = {"2": 2, "3": 3, "4":4, "5":5, "6":6, "7":7, "8":8, "9":9, "10":10, "J":10, "Q":10, "K":10, "A":10}
+value = card_values[card[0]]
 
-print("Hello! Welcome to Blackjack1")
-ask1 = input("If you'd like to begin, type play!")
-if ask1.lower() == "play":
-    print("Great lets begin!")
-else:
-    print("That answer is not recognized!")
+print("Hello! Welcome to Blackjack")
+while True:
+        ask1 = input("If you'd like to begin, type play!")
+        if ask1.lower() == ("play"):
+            print("Great! Lets begin!")
+            break
+        else:
+            print("That answer is not recognized.. Please try again!")
+
+
+def play_round(player_hand, money, initialbet, deck):
+    decision = input("What would you like to do? Hit, Stand, Bet, Double Down, or Split? ")
+    if decision.lower() == "hit":
+        print("You have decided to hit, you will receive one more card!")
+        player_hand.append(deck.pop())
+        print("Your hand is now:", player_hand)
+    elif decision.lower() == "stand":
+        print("You have decided to stand, you will not receive any cards.")
+    elif decision.lower() == "double down":
+        print("You have decided to double down, your initial bet will double and you will receive another card.")
+        money -= initialbet
+        initialbet *= 2
+        player_hand.append(deck.pop())
+        print("Your hand is now:", player_hand)
+    else:
+        print("That answer is not recognized.")
+    return player_hand, money, initialbet, deck
+    
+def hand_value():
+    value = 0
+    aces = 0
+    for card in hand:
+        card_rank = card[0]
+        value += card_values [card_rank]
+        if card_rank == "A":
+            aces +=1
+    while value > 21 and aces:
+        value -= 10
+        aces -= 1
+        return value
+
+while money > 0 and dmoney > 0 and len(deck) >= 4:
+    print("Lets begin betting!")
+    initialbet = int(input("How much would you like to bet? You have " + str(money) + " dollars."))
+    money -= int(initialbet)
+    print(f"You now have {money} dollars")
+    dealer_bet = initialbet
+    dmoney -= dealer_bet
+    print("The dealer bets", dealer_bet, " dollars")
+
+    player_hand = [deck.pop(), deck.pop()]
+    dealer_hand = [deck.pop(), deck.pop()]
+
+    print("Your hand is : ", player_hand)
+    print("The dealer's hand is: ", dealer_hand[0], "and a hidden card")
+    player_hand, money, initialbet, deck = play_round(player_hand, money, initialbet, deck)
     
