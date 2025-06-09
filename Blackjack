@@ -1,0 +1,14 @@
+import random
+money = 1000
+suites = ["Hearts", "Diamonds", "Spades", "Clubs"]
+cards = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"]
+deck = [(card, suite) for suite in suites for card in cards]
+random.shuffle(deck)
+
+print("Hello! Welcome to Blackjack1")
+ask1 = input("If you'd like to begin, type play!")
+if ask1.lower() == "play":
+    print("Great lets begin!")
+else:
+    print("That answer is not recognized!")
+    
