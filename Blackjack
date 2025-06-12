@@ -1,7 +1,7 @@
 import random
 import sys
-money = 1000
-dealermoney = 1000
+money = 5000
+dealermoney = 10000
 suites = ["Diamonds", "Spades", "Clubs", "Hearts"]
 cards = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"]
 deck = [(card, suite) for suite in suites for card in cards]
@@ -38,15 +38,19 @@ def play_round(player_hand, money, initialbet, deck):
             player_hand.append(deck.pop())
         else:
             print("Thats not a valid option, please retry!")
-
-def hand_value(hand):
+    
+def hand_value(player_hand, cards ):
     value = 0
+    ace_counter = 0
+            
+
+
 
 
 while True:
     initialbet = input(f"Lets start by betting! How much would you like to bet? you have {money} dollars")
     if int(initialbet) <= money:
-        print("Great! you have bet" + str(initialbet) + " dollars!")
+        print("Great! you have bet " + str(initialbet) + " dollars!")
         money -= int(initialbet)
         print(f"You now have {money} dollars")
         break
@@ -55,7 +59,30 @@ while True:
     else:
         print("I don't recgonize this answer! please try again!")
 
-print("The dealer will bet now!")
 while True:
-    print("Finished here for tonight!")
-        
+    if dealermoney >= int(initialbet):
+        print(f"The dealer has bet {initialbet} dollars")
+        dealermoney -= int(initialbet)
+        break
+    elif dealermoney < int(initialbet):
+        print(f"The dealer has gone all in! They have bet {dealermoney}")
+        dealerbet = dealermoney
+        dealermoney = 0
+        break
+
+print("Now that the betting has concluded lets begin by dealing the cards!")
+
+player_hand = []
+dealer_hand = []
+
+def dealing(deck):#Beginning of the round with dealing.
+    
+    #System of betting in card games (left to right, alternating to increase randomness.)
+    player_hand.append(deck.pop())
+    dealer_hand.append(deck.pop())
+    player_hand.append(deck.pop())
+    dealer_hand.append(deck.pop())
+    return player_hand, dealer_hand
+
+
+
